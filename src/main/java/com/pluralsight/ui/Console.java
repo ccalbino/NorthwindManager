@@ -61,6 +61,24 @@ public class Console {
         return result;
     }
 
+    public double promptForDouble(String prompt) {
+        boolean hasResult = false;
+        double result = 0;
+        while (!hasResult) {
+            try {
+                System.out.print(prompt);
+                result = scanner.nextDouble();
+                scanner.nextLine();
+                hasResult = true;
+
+            } catch (Exception e) {
+                System.out.println("Invalid entry");
+                scanner.next();
+            }
+        }
+        return result;
+    }
+
     public String promptForString(String prompt){
         return this.promptForString(prompt, false);
     }
@@ -86,7 +104,7 @@ public class Console {
 
     public int promptForOption(String[] options) {
         while (true) {
-            System.out.println("Please select form one of the following options");
+            System.out.println("Please select from one of the following options:");
             for (int i = 0; i < options.length; i++) {
                 System.out.println((i + 1) + ") " + options[i]);
             }
@@ -94,7 +112,7 @@ public class Console {
             try {
                 int choice = promptForInt("Select option (1–" + options.length + "): ");
                 if (choice >= 1 && choice <= options.length) {
-                    return choice;
+                    return choice; // Return index for easier use
                 } else {
                     System.out.println("Invalid choice. Please enter a number between 1 and " + options.length + ".");
                 }

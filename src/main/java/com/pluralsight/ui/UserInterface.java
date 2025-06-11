@@ -3,6 +3,7 @@ package com.pluralsight.ui;
 import com.pluralsight.data.NorthwindDataManager;
 import com.pluralsight.models.Category;
 import com.pluralsight.models.Employee;
+import com.pluralsight.models.Product;
 
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class UserInterface {
 
 
     private Employee loginUser(){
-        String s = console.promptForString("Just hit enter to login as Christian", true);
-        Employee e = new Employee(1, "Christian", "Albino");
+        String s = console.promptForString("Just hit enter to login as Matt", true);
+        Employee e = new Employee(1, "Matt", "Christenson");
         return e;
     }
 
@@ -88,12 +89,31 @@ public class UserInterface {
     }
 
     private void listProductsByPrice() {
+        double minPrice = console.promptForDouble("Enter the smallest price:");
+        double maxPrice = console.promptForDouble("Enter the largest price:");
+        List<Product> products = dataManager.getProductsByPrice(minPrice, maxPrice);
+        displayProducts(products);
     }
 
     private void listProductsByCategory() {
+        String categoryName = console.promptForString("Enter a Category Name:");
+        Category category = dataManager.getCategoryByName(categoryName);
+        if(category != null){
+            //System.out.println("you selected category id : " + category.getId());
+            List<Product> products = dataManager.getProductsByCategory(category);
+            displayProducts(products);
+        }
+        else{
+            System.out.println("There is no such category!");
+            return;
+        }
+
     }
 
     private void listProductsAll() {
+        List<Product> products = dataManager.getProducts();
+        displayProducts(products);
+
     }
 
     private void listCategoriesAll() {
@@ -105,5 +125,14 @@ public class UserInterface {
             categories.stream().forEach(c -> System.out.println(c.getCategoryName()));
         }
 
+    }
+
+    private void displayProducts(List<Product> products){
+        if(products.stream().count() <=0 ){
+            System.out.println("No Products found.");
+        }
+        else{
+            products.stream().forEach(p -> System.out.println(p));
+        }
     }
 }
