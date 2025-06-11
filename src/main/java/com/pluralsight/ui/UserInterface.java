@@ -30,8 +30,8 @@ public class UserInterface {
 
 
     private Employee loginUser(){
-        String s = console.promptForString("Just hit enter to login as Matt", true);
-        Employee e = new Employee(1, "Matt", "Christenson");
+        String s = console.promptForString("Just hit enter to login as Christian", true);
+        Employee e = new Employee(1, "christian", "Albino");
         return e;
     }
 
